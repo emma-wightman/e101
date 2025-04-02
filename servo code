@@ -1,0 +1,54 @@
+#include <Servo.h>
+
+Servo servo;  // create servo object to control a servo
+int sensorValue = 0;   // the sensor value
+
+const int sensorPin = 4; // define sensor pin
+const int servoPin = 5; // define servo pin
+
+void setup() {
+  servo.attach(servoPin);  // attaches the servo on the previously defined pin to the servo object
+  servo.write(0);   // rotate slowly servo to 0 degrees immediately
+  servo.write(90);
+  pinMode(sensorPin, INPUT_PULLUP);
+}
+
+void loop(){
+  int val = digitalRead(4);
+
+
+  if (val==0)
+  {servo.write(0);
+  }
+  if (val==1)
+  {
+    for (int pos = 0; pos <= 180; pos += 1) {  // rotate slowly from 0 degrees to 180 degrees, one by one degree in steps of 1 degree
+    servo.write(pos);  // control servo to go to position in variable 'pos'
+    delay(10);         // waits 10ms for the servo to reach the position
+  }
+  delay(5000);
+
+  for (int pos = 180; pos >= 0; pos -= 1) {  // rotate from 180 degrees to 0 degrees, one by one degree
+    servo.write(pos);                        // control servo to go to position in variable 'pos'
+    delay(10);                               // waits 10ms for the servo to reach the position
+  }
+    }
+}
+
+////////////////////
+//^^ code for everything
+// vv code to test sensor
+////////////
+
+const int Pin=4;
+
+void setup() {
+    pinMode(Pin, INPUT_PULLUP);
+    Serial.begin(9600);
+}
+ 
+void loop() {
+    int sensorValue = digitalRead(Pin); 
+        Serial.println(sensorValue);
+        delay(500);
+}
